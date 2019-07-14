@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  text = 'Check out the Ionic Social Sharing!';
+  url = 'https://ionicframework.com/';
+
+  constructor(private socialSharing: SocialSharing) {}
+
+  test() {
+    this.socialSharing.shareVia(`com.discord`, `${this.text} ${this.url}`)
+        .then(() => {
+          console.log('Success');
+        }).catch(() => {
+          console.log('Error');
+    });
+  }
 
 }
