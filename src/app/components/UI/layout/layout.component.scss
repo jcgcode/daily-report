@@ -1,0 +1,31 @@
+.layout-grid {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+.layout-header {
+  background-color: #0f4269;
+  color: #ffffff;
+  height: 30%;
+  justify-content: center;
+}
+.layout-body {
+  height: 70%;
+  flex-grow: 1;
+}
+
+ion-icon {
+  &.layout-logo-size {
+    width: 30%;
+    height: 30%;
+    margin-top: 10%;
+  }
+}
+
+ion-card {
+  &.layout-card {
+    position: absolute;
+    top: 20%;
+    background: #ffffff;
+  }
+}
