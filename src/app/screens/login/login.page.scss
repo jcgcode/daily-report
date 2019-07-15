@@ -1,0 +1,32 @@
+.login-grid{
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+.login-header {
+  background-color: #0f4269;
+  color: #ffffff;
+  height: 30%;
+  justify-content: center;
+}
+.login-body {
+  height: 70%;
+  flex-grow: 1;
+}
+
+ion-icon {
+  &.icon-logo-size {
+    width: 30%;
+    height: 30%;
+    margin-top: 10%;
+  }
+}
+
+ion-card {
+  &.card-login-body {
+    position: absolute;
+    top: 20%;
+    background: azure;
+    height: 70%;
+  }
+}
