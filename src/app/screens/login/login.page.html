@@ -1,18 +1,58 @@
 <ion-content>
   <LayoutComponent>
-    <p title no-margin>First things first</p>
+    <p title class="title">First things first</p>
     <p description no-margin>Let us know something before getting started</p>
     <div content>
       <ion-list no-padding>
-        <ion-item>
+        <ion-item no-padding>
           <ion-label position="stacked">Gitlab user <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+          <ionic-selectable
+                  #userSelectable
+                  [items]="gitlabUsers"
+                  itemValueField="id"
+                  itemTextField="name"
+                  [canSearch]="true"
+                  (onChange)="handleUser($event)">
+            <ng-template ionicSelectableHeaderTemplate>
+              <ion-toolbar>
+                <ion-buttons slot="end">
+                  <ion-button (click)="userSelectable.close()">
+                    {{userSelectable.closeButtonText}}
+                  </ion-button>
+                </ion-buttons>
+                <ion-title>
+                  {{userSelectable.label}}
+                </ion-title>
+              </ion-toolbar>
+            </ng-template>
+          </ionic-selectable>
         </ion-item>
-        <ion-item>
+        <ion-item no-padding>
           <ion-label position="stacked">Select your projects <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
+          <ionic-selectable
+                  #projectSelectable
+                  [items]="gitlabProjects"
+                  itemValueField="id"
+                  itemTextField="name"
+                  [isMultiple]="true"
+                  [canSearch]="true"
+                  (onChange)="handleProjects($event)">
+            <ng-template ionicSelectableHeaderTemplate>
+              <ion-toolbar>
+                <ion-buttons slot="end">
+                  <ion-button (click)="projectSelectable.close()">
+                    {{projectSelectable.closeButtonText}}
+                  </ion-button>
+                </ion-buttons>
+                <ion-title>
+                  {{projectSelectable.label}}
+                </ion-title>
+              </ion-toolbar>
+            </ng-template>
+          </ionic-selectable>
         </ion-item>
       </ion-list>
+      <ion-button (click)="login()" expand="block" [disabled]="!selectedUser || !selectedProjects">Let's go</ion-button>
     </div>
   </LayoutComponent>
 </ion-content>

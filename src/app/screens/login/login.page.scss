@@ -1,0 +1,11 @@
+ion-list {
+  margin-bottom: 30px;
+}
+
+p {
+  &.title {
+    size: 34pt;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+}

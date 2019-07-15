@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   GITLAB_TOKEN: '',
-  DISCORD_TOKEN: '',
-  TOKEN_KEY: 'auth-token',
+  TOKEN_KEY: '',
 };
 
 /*

@@ -7,6 +7,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {LoginPage} from './login.page';
 import {LayoutComponent} from '../../components/UI/layout/layout.component';
+import {IonicSelectableModule} from 'ionic-selectable';
 
 const routes: Routes = [
     {
@@ -20,6 +21,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
+        IonicSelectableModule,
         RouterModule.forChild(routes)
     ],
     declarations: [LoginPage, LayoutComponent]

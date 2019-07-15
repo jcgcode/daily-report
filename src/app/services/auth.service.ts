@@ -3,6 +3,8 @@ import {BehaviorSubject} from 'rxjs';
 import {Storage} from '@ionic/storage';
 import {Platform} from '@ionic/angular';
 import {environment} from '../../environments/environment';
+import User from './interfaces/user.interface';
+import Project from './interfaces/project.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +18,8 @@ export class AuthService {
         });
     }
 
-    login() {
-        return this.storage.set(environment.TOKEN_KEY, 'test123').then(response => {
+    login(gitlabUser: User, gitlabProjects: Project[]) {
+        return this.storage.set(environment.TOKEN_KEY, {gitlab_user: gitlabUser, gitlab_projects: gitlabProjects}).then(response => {
             this.authenticationState.next(true);
         });
     }
