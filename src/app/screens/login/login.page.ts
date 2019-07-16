@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {IonicSelectableComponent} from 'ionic-selectable';
 import User from '../../services/interfaces/user.interface';
 import Project from '../../services/interfaces/project.interface';
 import {ProjectService} from '../../services/project.service';
+import {UserService} from '../../services/user.service';
+import {concatChildArrays, omitDuplicates} from '../../services/util';
 
 @Component({
     selector: 'app-login',
@@ -16,19 +18,17 @@ export class LoginPage implements OnInit {
     selectedUser: User;
     gitlabProjects: Project[];
     selectedProjects: Project[];
+    @ViewChild('userSelectable') userSelectable: IonicSelectableComponent;
 
-    constructor(private authService: AuthService, private projectService: ProjectService) {
-        this.gitlabUsers = [
-            {id: 1, name: '@jcantillog'},
-            {id: 2, name: '@guerrero7'},
-            {id: 3, name: '@elementooro'}
-        ];
+    constructor(private authService: AuthService,
+                private projectService: ProjectService,
+                private userService: UserService) {
     }
 
     ngOnInit(): void {
         this.projectService.getProjectList().subscribe(
-            (data: any) => {
-                this.gitlabProjects = data[0].concat(data[1]);
+            data => {
+                this.gitlabProjects = concatChildArrays(data);
             }, error => {
                 console.log(error);
             }
@@ -54,6 +54,17 @@ export class LoginPage implements OnInit {
             this.selectedProjects = null;
         } else {
             this.selectedProjects = event.value;
+            this.userService.getProjectsUsers(this.selectedProjects).subscribe(
+                data => {
+                    this.gitlabUsers = omitDuplicates(concatChildArrays(data), 'id');
+                    if (this.selectedUser && !this.gitlabUsers.some(user => user.id === this.selectedUser.id)) {
+                        this.selectedUser = null;
+                        this.userSelectable.clear();
+                    }
+                }, error => {
+                    console.log(error);
+                }
+            );
         }
     }
 }

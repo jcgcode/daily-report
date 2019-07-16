@@ -3,8 +3,16 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {forkJoin} from 'rxjs';
 
-const fleksGroupID = 2102581;
-const elementoGroupID = 3320863;
+const GROUPS = [
+    {
+        name: 'Fleks',
+        id: 2102581
+    },
+    {
+        name: 'E43',
+        id: 3320863
+    }
+];
 
 @Injectable({
     providedIn: 'root'
@@ -15,12 +23,10 @@ export class ProjectService {
     }
 
     getProjectList() {
-        const requestForFleks = this.http.get
-        (`${environment.GITLAB_URL}groups/${fleksGroupID}/projects?include_subgroups=true`);
-
-        const requestForE43 = this.http.get
-        (`${environment.GITLAB_URL}groups/${elementoGroupID}/projects?include_subgroups=true`);
-
-        return forkJoin([requestForFleks, requestForE43]);
+        return forkJoin(
+            GROUPS.map((group) => {
+                return this.http.get(`${environment.GITLAB_URL}groups/${group.id}/projects?include_subgroups=true`);
+            })
+        );
     }
 }
