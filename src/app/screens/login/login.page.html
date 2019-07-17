@@ -4,58 +4,8 @@
     <p description no-margin>Let us know something before getting started</p>
     <div content>
       <ion-list no-padding>
-        <ion-item no-padding>
-          <ion-icon name="logo-github" slot="start"></ion-icon>
-          <ion-label position="stacked">Select your projects <ion-text color="danger">*</ion-text></ion-label>
-          <ionic-selectable
-                  #projectSelectable
-                  [items]="gitlabProjects"
-                  itemValueField="id"
-                  itemTextField="name_with_namespace"
-                  confirmButtonText="Done"
-                  [searchFailText]="'No projects found.'"
-                  [isMultiple]="true"
-                  [canSearch]="true"
-                  (onChange)="handleProjects($event)">
-            <ng-template ionicSelectableHeaderTemplate>
-              <ion-toolbar>
-                <ion-buttons slot="end">
-                  <ion-button (click)="projectSelectable.close()">
-                    {{projectSelectable.closeButtonText}}
-                  </ion-button>
-                </ion-buttons>
-                <ion-title>
-                  {{projectSelectable.label}}
-                </ion-title>
-              </ion-toolbar>
-            </ng-template>
-          </ionic-selectable>
-        </ion-item>
-        <ion-item no-padding>
-          <ion-icon name='at' slot="start"></ion-icon>
-          <ion-label position="stacked">Gitlab user <ion-text color="danger">*</ion-text></ion-label>
-          <ionic-selectable
-                  #userSelectable
-                  [items]="gitlabUsers"
-                  itemValueField="id"
-                  itemTextField="username"
-                  [searchFailText]="'No users found.'"
-                  [canSearch]="true"
-                  (onChange)="handleUser($event)">
-            <ng-template ionicSelectableHeaderTemplate>
-              <ion-toolbar>
-                <ion-buttons slot="end">
-                  <ion-button (click)="userSelectable.close()">
-                    {{userSelectable.closeButtonText}}
-                  </ion-button>
-                </ion-buttons>
-                <ion-title>
-                  {{userSelectable.label}}
-                </ion-title>
-              </ion-toolbar>
-            </ng-template>
-          </ionic-selectable>
-        </ion-item>
+        <SelectProjectsComponent (selectedProjects)="handleProjects($event)"></SelectProjectsComponent>
+        <SelectUserComponent [projects]="selectedProjects" [user]="selectedUser" (selectedUser)="handleUser($event)"></SelectUserComponent>
       </ion-list>
       <ion-button (click)="login()" expand="block" [disabled]="!selectedUser || !selectedProjects">Let's go</ion-button>
     </div>

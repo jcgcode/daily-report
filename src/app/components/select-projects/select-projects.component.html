@@ -1,0 +1,27 @@
+<ion-item no-padding>
+  <ion-icon name="logo-github" slot="start"></ion-icon>
+  <ion-label position="stacked">Select your projects <ion-text color="danger">*</ion-text></ion-label>
+  <ionic-selectable
+          #projectSelectable
+          [items]="gitlabProjects"
+          itemValueField="id"
+          itemTextField="name_with_namespace"
+          confirmButtonText="Done"
+          [searchFailText]="'No projects found.'"
+          [isMultiple]="true"
+          [canSearch]="true"
+          (onChange)="handleProjects($event)">
+    <ng-template ionicSelectableHeaderTemplate>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="projectSelectable.close()">
+            {{projectSelectable.closeButtonText}}
+          </ion-button>
+        </ion-buttons>
+        <ion-title>
+          {{projectSelectable.label}}
+        </ion-title>
+      </ion-toolbar>
+    </ng-template>
+  </ionic-selectable>
+</ion-item>

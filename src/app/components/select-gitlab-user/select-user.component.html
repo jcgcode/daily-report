@@ -1,0 +1,25 @@
+<ion-item no-padding>
+  <ion-icon name='at' slot="start"></ion-icon>
+  <ion-label position="stacked">Gitlab user <ion-text color="danger">*</ion-text></ion-label>
+  <ionic-selectable
+          #userSelectable
+          [items]="gitlabUsers"
+          itemValueField="id"
+          itemTextField="username"
+          [searchFailText]="'No users found.'"
+          [canSearch]="true"
+          (onChange)="handleUser($event)">
+    <ng-template ionicSelectableHeaderTemplate>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="userSelectable.close()">
+            {{userSelectable.closeButtonText}}
+          </ion-button>
+        </ion-buttons>
+        <ion-title>
+          {{userSelectable.label}}
+        </ion-title>
+      </ion-toolbar>
+    </ng-template>
+  </ionic-selectable>
+</ion-item>

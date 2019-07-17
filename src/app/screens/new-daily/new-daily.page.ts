@@ -14,11 +14,11 @@ export class NewDailyPage implements OnInit {
     ngOnInit() {
     }
 
-    ionViewDidEnter() {
+    /*ionViewDidEnter() {
         document.addEventListener('backbutton', e => {
             console.log('disable back button');
         }, false);
-    }
+    }*/
 
     logout() {
         this.authService.logout();
