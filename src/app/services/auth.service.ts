@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Storage} from '@ionic/storage';
 import {Platform} from '@ionic/angular';
-import {environment} from '../../environments/environment';
 import User from './interfaces/user.interface';
 import Project from './interfaces/project.interface';
+import {TOKENS_KEYS} from './util';
 
 @Injectable({
     providedIn: 'root'
@@ -19,13 +19,13 @@ export class AuthService {
     }
 
     login(gitlabUser: User, gitlabProjects: Project[]) {
-        return this.storage.set(environment.TOKEN_KEY, {gitlab_user: gitlabUser, gitlab_projects: gitlabProjects}).then(response => {
+        return this.storage.set(TOKENS_KEYS.AUTH, {gitlab_user: gitlabUser, gitlab_projects: gitlabProjects}).then(response => {
             this.authenticationState.next(true);
         });
     }
 
     logout() {
-        return this.storage.remove(environment.TOKEN_KEY).then(() => {
+        return this.storage.remove(TOKENS_KEYS.AUTH).then(() => {
             this.authenticationState.next(false);
         });
     }
@@ -35,7 +35,7 @@ export class AuthService {
     }
 
     checkToken() {
-        return this.storage.get(environment.TOKEN_KEY).then(response => {
+        return this.storage.get(TOKENS_KEYS.AUTH).then(response => {
             if (response) { this.authenticationState.next(true); }
         });
     }

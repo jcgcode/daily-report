@@ -1,14 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>New Daily</ion-title>
+    <ion-title>E43 Daily</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ng-template #dailyIncomplete>
+    <ion-card-content class="flex">
+      Please register your today's daily
+      <ion-button fill="clear" size="default">
+        <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ng-template>
+  <ion-card [ngClass]="dailyDone ? 'done' : 'incomplete'">
+    <ion-item>
+      <ion-icon [name]="dailyDone ? 'checkbox' : 'information-circle'"
+                [color]="dailyDone ? 'success' : 'danger'"
+                slot="start">
+      </ion-icon>
+      <ion-label>Today's daily</ion-label>
+    </ion-item>
+    <ion-card-content class="flex" *ngIf="dailyDone; else dailyIncomplete">
+      Daily registered successfully!
+      <ion-button fill="clear" size="default">
+        <ion-icon slot="icon-only" name="eye"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

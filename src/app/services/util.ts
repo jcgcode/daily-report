@@ -1,3 +1,8 @@
+export const TOKENS_KEYS = {
+    AUTH: 'Auth',
+    TODAY_DAILY: 'TodayDaily'
+};
+
 /**
  * For an array given, concat two or more child arrays into one
  * @param (parentArray) Array

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {DailyService} from '../../services/daily.service';
 
 @Component({
     selector: 'app-new-daily',
@@ -8,10 +9,16 @@ import {AuthService} from '../../services/auth.service';
 })
 export class NewDailyPage implements OnInit {
 
-    constructor(private authService: AuthService) {
+    dailyDone: boolean;
+
+    constructor(private authService: AuthService,
+                private dailyService: DailyService) {
     }
 
     ngOnInit() {
+        this.dailyService.isTodaysDailyDone().then((response) => {
+            this.dailyDone = response;
+        });
     }
 
     /*ionViewDidEnter() {

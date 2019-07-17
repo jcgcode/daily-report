@@ -6,7 +6,6 @@ export const environment = {
   production: false,
   GITLAB_TOKEN: '',
   GITLAB_URL: '',
-  TOKEN_KEY: '',
 };
 
 /*
