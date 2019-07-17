@@ -6,7 +6,7 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {timer} from 'rxjs';
 import {AuthService} from './services/auth.service';
-import {Router, Routes} from '@angular/router';
+import {NavigationEnd, Router, Routes} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -23,6 +23,11 @@ export class AppComponent {
         private router: Router
     ) {
         this.initializeApp();
+        /*this.router.events.subscribe((event: any) => {
+            console.log(event);
+            if (event instanceof NavigationEnd) {
+            }
+        });*/
     }
 
     initializeApp() {
@@ -33,7 +38,7 @@ export class AppComponent {
             this.authService.authenticationState.subscribe(state => {
                 console.log('Auth changed: ', state);
                 if (state) {
-                    this.router.navigate(['new-daily']);
+                    this.router.navigate(['tabs']);
                 } else {
                     this.router.navigate(['login']);
                 }

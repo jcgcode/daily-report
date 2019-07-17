@@ -6,9 +6,9 @@ const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', loadChildren: './screens/login/login.module#LoginPageModule'},
     {
-        path: 'new-daily',
+        path: 'tabs',
         canActivate: [AuthGuardService],
-        loadChildren: './screens/new-daily/new-daily.module#NewDailyPageModule'
+        loadChildren: './screens/tabs/tabs.module#TabsPageModule'
     }
 ];
 

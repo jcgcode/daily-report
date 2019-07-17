@@ -9,7 +9,7 @@ import {LoginPage} from './login.page';
 import {LayoutComponent} from '../../components/UI/layout/layout.component';
 import {IonicSelectableModule} from 'ionic-selectable';
 import {SelectProjectsComponent} from '../../components/select-projects/select-projects.component';
-import {SelectUserComponent} from '../../components/select-gitlab-user/select-user.component';
+import {SelectUserComponent} from '../../components/select-user/select-user.component';
 
 const routes: Routes = [
     {
