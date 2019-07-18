@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -13,7 +13,7 @@
   <ng-template #dailyIncomplete>
     <ion-card-content class="flex">
       Please register your today's daily
-      <ion-button fill="clear" size="default">
+      <ion-button fill="clear" size="default" (click)="toNewDaily()">
         <ion-icon slot="icon-only" name="clipboard"></ion-icon>
       </ion-button>
     </ion-card-content>

@@ -1,15 +1,10 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
 import {Routes, RouterModule} from '@angular/router';
-
-import {IonicModule} from '@ionic/angular';
 
 import {LoginPage} from './login.page';
 import {LayoutComponent} from '../../components/UI/layout/layout.component';
-import {IonicSelectableModule} from 'ionic-selectable';
-import {SelectProjectsComponent} from '../../components/select-projects/select-projects.component';
 import {SelectUserComponent} from '../../components/select-user/select-user.component';
+import {SharedModule} from '../../shared/shared.module';
 
 const routes: Routes = [
     {
@@ -20,16 +15,12 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        IonicSelectableModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     declarations: [
         LoginPage,
         LayoutComponent,
-        SelectProjectsComponent,
         SelectUserComponent
     ]
 })

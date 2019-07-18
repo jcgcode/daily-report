@@ -9,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: 'tab1',
-        loadChildren: '../new-daily/new-daily.module#NewDailyPageModule'
+        loadChildren: '../daily/daily.module#DailyPageModule'
       },
       {
         path: 'tab2',
-        loadChildren: '../new-daily/new-daily.module#NewDailyPageModule'
+        loadChildren: '../daily/daily.module#DailyPageModule'
       },
       {
         path: '**',

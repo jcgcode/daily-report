@@ -17,7 +17,12 @@ import {TokenInterceptor} from './services/interceptors/token.interceptor';
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        IonicStorageModule.forRoot(),
+        HttpClientModule],
     providers: [
         StatusBar,
         SplashScreen,
@@ -28,7 +33,6 @@ import {TokenInterceptor} from './services/interceptors/token.interceptor';
             multi: true
         }
     ],
-    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
