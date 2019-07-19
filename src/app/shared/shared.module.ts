@@ -6,7 +6,9 @@ import {IonicSelectableModule} from 'ionic-selectable';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [SelectProjectsComponent],
+  declarations: [
+      SelectProjectsComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,5 +1,5 @@
 <ion-header translucent>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
         Cancel
@@ -9,32 +9,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen padding scroll-y="false">
+<ion-content fullscreen padding>
   <ion-slides scrollbar="true">
 
     <ion-slide>
-      <img src="/assets/create-issues.svg"/>
-      <h2>Did you <b>create</b> any issue?</h2>
-      <SelectProjectsComponent></SelectProjectsComponent>
-      <p>The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper code use.</p>
-    </ion-slide>
-
-    <ion-slide>
       <img src="/assets/develop-issues.svg"/>
-      <h2>What is Ionic?</h2>
-      <p><b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.</p>
-    </ion-slide>
+      <h2>Issues <b>developing</b></h2>
+      <p>
+        Yesterday I worked on:
+        <ion-button slot="icon-only" fill="clear" (click)="toIssuesMgt('Issues developed yesterday')">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-button>
+      </p>
+      <div style="border: 1px solid red; height: 30%; margin: 5%;">
 
-    <ion-slide>
-      <img src="/assets/test-issues.svg"/>
-      <h2>What is Ionic Pro?</h2>
-      <p><b>Ionic Pro</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new level of app development agility to mobile dev teams.</p>
-    </ion-slide>
+      </div>
+      <p>
+        Today I'll work on:
+        <ion-button slot="icon-only" fill="clear"><ion-icon name="arrow-forward"></ion-icon></ion-button>
+      </p>
+      <div style="border: 1px solid red; height: 30%; margin: 5%;">
 
-    <ion-slide>
-      <img src="/assets/support-issues.svg"/>
-      <h2>Ready to Play?</h2>
-      <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+      </div>
     </ion-slide>
 
   </ion-slides>
