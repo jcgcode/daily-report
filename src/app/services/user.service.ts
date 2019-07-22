@@ -12,7 +12,7 @@ export class UserService {
     constructor(private http: HttpClient) {
     }
 
-    getProjectsUsers(selectedProjects: Project[]) {
+    getUsers(selectedProjects: Project[]) {
         return forkJoin(
             selectedProjects.map((project) => {
                 return this.http.get(`${environment.GITLAB_URL}projects/${project.id}/members`);

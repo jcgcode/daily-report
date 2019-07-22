@@ -13,24 +13,15 @@
   <ion-slides scrollbar="true">
 
     <ion-slide>
-      <img src="/assets/develop-issues.svg"/>
-      <h2>Issues <b>developing</b></h2>
-      <p>
-        Yesterday I worked on:
-        <ion-button slot="icon-only" fill="clear" (click)="toIssuesMgt('Issues developed yesterday')">
-          <ion-icon name="arrow-forward"></ion-icon>
-        </ion-button>
-      </p>
-      <div style="border: 1px solid red; height: 30%; margin: 5%;">
-
-      </div>
-      <p>
-        Today I'll work on:
-        <ion-button slot="icon-only" fill="clear"><ion-icon name="arrow-forward"></ion-icon></ion-button>
-      </p>
-      <div style="border: 1px solid red; height: 30%; margin: 5%;">
-
-      </div>
+      <AccordionComponent *ngFor="let section of sections"
+                          [name]="section.name"
+                          [image]="section.image"
+                          [object]="section"
+                          (change)="captureObject($event)">
+        <IssuesMgtComponent *ngIf="selectedSection"
+                            [source]="selectedSection.source">
+        </IssuesMgtComponent>
+      </AccordionComponent>
     </ion-slide>
 
   </ion-slides>

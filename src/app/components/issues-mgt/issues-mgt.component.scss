@@ -1,3 +1,20 @@
 ion-badge {
   margin: 0 auto;
 }
+
+ion-card {
+  &.incomplete {
+    border: 1px solid var(--ion-color-danger);
+  }
+  &.done {
+    border: 1px solid var(--ion-color-success);
+  }
+}
+
+ion-card-content {
+  &.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

@@ -16,7 +16,7 @@ export class SelectUserComponent {
     @Input() user: User;
     @Input() set projects(projects: Project[]) {
         if (projects && projects.length > 0) {
-            this.userService.getProjectsUsers(projects).subscribe(
+            this.userService.getUsers(projects).subscribe(
                 data => {
                     this.gitlabUsers = omitDuplicates(concatChildArrays(data), 'id');
                     if (this.user && !this.gitlabUsers.some(user => user.id === this.user.id)) {

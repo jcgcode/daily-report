@@ -4,10 +4,12 @@ import {SelectProjectsComponent} from '../components/select-projects/select-proj
 import {IonicModule} from '@ionic/angular';
 import {IonicSelectableModule} from 'ionic-selectable';
 import {FormsModule} from '@angular/forms';
+import {AccordionComponent} from '../components/UI/accordion/accordion.component';
 
 @NgModule({
   declarations: [
-      SelectProjectsComponent
+      SelectProjectsComponent,
+      AccordionComponent
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import {FormsModule} from '@angular/forms';
   ],
   exports: [
     SelectProjectsComponent,
+    AccordionComponent,
     CommonModule,
     FormsModule,
     IonicModule,

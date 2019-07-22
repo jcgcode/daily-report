@@ -1,0 +1,12 @@
+<ion-item (click)="toggleAccordion()">
+  <ion-thumbnail slot="start">
+    <ion-img [src]="image"></ion-img>
+  </ion-thumbnail>
+  <ion-label>{{name}}</ion-label>
+  <ion-icon [name]="isMenuOpen ? 'arrow-dropup' : 'arrow-dropdown'"
+            slot="end">
+  </ion-icon>
+</ion-item>
+<div [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
+  <ng-content></ng-content>
+</div>

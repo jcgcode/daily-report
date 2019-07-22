@@ -1,38 +1,19 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button slot="icon.only" (click)="dismiss()">
-        <ion-icon name="done-all"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>{{title}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content fullscreen padding>
-
-</ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-grid grid>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-badge color="warning">ToDo</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-badge color="success">Doing</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-badge color="tertiary">QA</ion-badge>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-footer>
+<div *ngIf="!issuesList">
+  <ion-card *ngFor="let item of ['', '', '', '', '', '', '', '', '']" style="padding: 5px;">
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content class="flex">
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+<ion-card style="border: 1px solid gray" *ngFor="let issue of issuesList">
+  <ion-item>
+    <ion-checkbox slot="start"></ion-checkbox>
+    <ion-badge *ngFor="let label of issue.labels" [ngStyle]="{'background-color': label.color}" slot="end">{{label.name}}</ion-badge>
+  </ion-item>
+  <ion-card-content class="flex">
+    {{issue.title}}
+  </ion-card-content>
+</ion-card>
