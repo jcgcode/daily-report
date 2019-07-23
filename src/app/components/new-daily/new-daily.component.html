@@ -13,13 +13,16 @@
   <ion-slides scrollbar="true">
 
     <ion-slide>
-      <AccordionComponent *ngFor="let section of sections"
-                          [name]="section.name"
-                          [image]="section.image"
-                          [object]="section"
-                          (change)="captureObject($event)">
-        <IssuesMgtComponent *ngIf="selectedSection"
-                            [source]="selectedSection.source">
+      <AccordionComponent
+              *ngFor="let section of sections"
+              [name]="section.name"
+              [image]="section.image"
+              (change)="section.opened = $event">
+        <IssuesMgtComponent
+                *ngIf="section.opened"
+                [source]="section.source"
+                [issues]="section.issues[0]"
+                (collapsed)="section.issues[0] = $event;">
         </IssuesMgtComponent>
       </AccordionComponent>
     </ion-slide>

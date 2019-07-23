@@ -3,6 +3,26 @@ export const TOKENS_KEYS = {
     TODAY_DAILY: 'TodayDaily'
 };
 
+export const NEW_YESTERDAY_LABELS = {
+    'To Do': true,
+    Doing: true,
+    Done: true,
+    'QA review': true,
+    Reviewed: true,
+    Approved: true
+};
+export const DEV_YESTERDAY_LABELS = {
+    Doing: true,
+    Done: true,
+    'QA review': true,
+    Reviewed: true,
+    Approved: true
+};
+export const TEST_YESTERDAY_LABELS = {
+    'QA review': true,
+    Reviewed: true
+};
+
 /**
  * For an array given, concat two or more child arrays into one
  * @param (parentArray) Array

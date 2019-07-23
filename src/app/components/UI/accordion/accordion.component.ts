@@ -9,8 +9,7 @@ export class AccordionComponent {
 
     @Input() name: string;
     @Input() image: string;
-    @Input() object: any;
-    @Output() change: EventEmitter<any> = new EventEmitter();
+    @Output() change: EventEmitter<boolean> = new EventEmitter();
 
     isMenuOpen: boolean;
 
@@ -20,7 +19,7 @@ export class AccordionComponent {
 
     toggleAccordion(): void {
         this.isMenuOpen = !this.isMenuOpen;
-        this.change.emit(this.object);
+        this.change.emit(this.isMenuOpen);
     }
 
 }

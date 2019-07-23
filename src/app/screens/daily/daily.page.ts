@@ -36,12 +36,7 @@ export class DailyPage implements OnInit {
 
     async toNewDaily() {
         const modal = await this.modalController.create({
-            component: NewDailyComponent,
-            componentProps: {
-                firstName: 'Douglas',
-                lastName: 'Adams',
-                middleInitial: 'N'
-            }
+            component: NewDailyComponent
         });
         await modal.present();
         const { data } = await modal.onWillDismiss();

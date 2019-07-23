@@ -34,19 +34,49 @@ export class ProjectService {
         );
     }
 
-    getProjectsIssues() {
+    getProjectsIssues(labels: string, source: string) {
         return this.storage.get(TOKENS_KEYS.AUTH).then(
             (auth: { gitlab_user: User, gitlab_projects: Project[] }) => {
-                return forkJoin(
-                    auth.gitlab_projects.map((project) => {
-                        return this.http.get(`${environment.GITLAB_URL}projects/${project.id}/issues`, { params: {
-                            per_page: '100',
-                            with_labels_details: 'true',
-                            assignee_username: [auth.gitlab_user.username],
-                            state: 'opened'
-                        }});
-                    })
-                );
+
+                const promiseList = [];
+                const labelList = labels.split(',');
+
+                auth.gitlab_projects.forEach((project) => {
+                    const promiseLabelList = labelList.map(label => {
+                        return this.http.get(`${environment.GITLAB_URL}projects/${project.id}/issues`, (source === 'dev' ?
+                            {
+                                params: {
+                                    per_page: '100',
+                                    with_labels_details: 'true',
+                                    assignee_username: [auth.gitlab_user.username],
+                                    labels: label,
+                                }
+                            } : (source === 'new' ?
+                                        {
+                                            params: {
+                                                per_page: '100',
+                                                with_labels_details: 'true',
+                                                author_username: [auth.gitlab_user.username],
+                                                labels: label
+                                            }
+                                        }
+                                        :
+                                        {
+                                            params: {
+                                                per_page: '100',
+                                                with_labels_details: 'true',
+                                                labels: label
+                                            }
+                                        }
+                                )
+                        ));
+                    });
+                    promiseList.push(
+                        ...promiseLabelList
+                    );
+                });
+
+                return forkJoin(promiseList);
             }
         );
     }

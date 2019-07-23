@@ -1,10 +1,5 @@
 div {
   position: relative;
+  display: block;
   border-bottom: 1px solid rgba(210, 210, 210, 1);
-}
-.active {
-  display: block
-}
-.inactive {
-  display: none;
 }

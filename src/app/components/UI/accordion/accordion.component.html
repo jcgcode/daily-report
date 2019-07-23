@@ -7,6 +7,6 @@
             slot="end">
   </ion-icon>
 </ion-item>
-<div [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
+<div *ngIf="this.isMenuOpen">
   <ng-content></ng-content>
 </div>

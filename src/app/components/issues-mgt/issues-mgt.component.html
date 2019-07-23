@@ -1,4 +1,4 @@
-<div *ngIf="!issuesList">
+<ng-template [ngIf]="!localIssues">
   <ion-card *ngFor="let item of ['', '', '', '', '', '', '', '', '']" style="padding: 5px;">
     <ion-item>
       <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
@@ -7,10 +7,11 @@
       <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
     </ion-card-content>
   </ion-card>
-</div>
-<ion-card style="border: 1px solid gray" *ngFor="let issue of issuesList">
+</ng-template>
+<ion-card style="border: 1px solid gray" *ngFor="let issue of localIssues">
   <ion-item>
-    <ion-checkbox slot="start"></ion-checkbox>
+    <ion-checkbox slot="start" [checked]="issue.checked" (ionChange)="checkedIssue($event, issue)"></ion-checkbox>
+    <ion-label>#{{issue.iid}}</ion-label>
     <ion-badge *ngFor="let label of issue.labels" [ngStyle]="{'background-color': label.color}" slot="end">{{label.name}}</ion-badge>
   </ion-item>
   <ion-card-content class="flex">
