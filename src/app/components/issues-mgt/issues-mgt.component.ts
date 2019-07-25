@@ -1,11 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {
-    NEW_YESTERDAY_LABELS,
-    concatChildArrays,
+    NEW_LABELS,
+    TEST_LABELS,
     DEV_YESTERDAY_LABELS,
+    DEV_TODAY_LABELS,
+    concatChildArrays,
     omitDuplicates,
-    TEST_YESTERDAY_LABELS
+    sourceLabels
 } from '../../services/util';
 import {ProjectService} from '../../services/project.service';
 import Issue from '../../services/interfaces/issue.interface';
@@ -18,6 +20,7 @@ import Issue from '../../services/interfaces/issue.interface';
 export class IssuesMgtComponent implements OnInit {
 
     @Input() source: string;
+    @Input() today: boolean;
     @Input() issues: Issue[];
     @Output() collapsed: EventEmitter<any> = new EventEmitter();
 
@@ -33,20 +36,18 @@ export class IssuesMgtComponent implements OnInit {
         } else {
             switch (this.source) {
                 case 'dev':
-                    this.projectService.getProjectsIssues('Doing,Done,QA review,Reviewed,Approved', 'dev').then(
+                    this.projectService.getProjectsIssues(sourceLabels('dev', this.today), 'dev').then(
                         response => {
                             response.subscribe(
                                 data => {
                                     this.assignIssues(data);
-                                }, error => {
-                                    console.log(error);
                                 }
                             );
                         }
                     );
                     break;
                 case 'test':
-                    this.projectService.getProjectsIssues('QA review,Reviewed', 'test').then(
+                    this.projectService.getProjectsIssues(sourceLabels('test'), 'test').then(
                         response => {
                             response.subscribe(
                                 data => {
@@ -59,7 +60,7 @@ export class IssuesMgtComponent implements OnInit {
                     );
                     break;
                 case 'new':
-                    this.projectService.getProjectsIssues('To Do,Doing,Done,QA review,Reviewed,Approved', 'new').then(
+                    this.projectService.getProjectsIssues(sourceLabels('new'), 'new').then(
                         response => {
                             response.subscribe(
                                 data => {
@@ -87,11 +88,11 @@ export class IssuesMgtComponent implements OnInit {
             issue.labels = issue.labels.filter(label => {
                 switch (this.source) {
                     case 'dev':
-                        return DEV_YESTERDAY_LABELS[label.name];
+                        return this.today ? DEV_TODAY_LABELS[label.name] : DEV_YESTERDAY_LABELS[label.name];
                     case 'test':
-                        return TEST_YESTERDAY_LABELS[label.name];
+                        return TEST_LABELS[label.name];
                     case 'new':
-                        return NEW_YESTERDAY_LABELS[label.name];
+                        return NEW_LABELS[label.name];
                 }
             });
         });

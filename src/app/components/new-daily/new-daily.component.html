@@ -1,31 +1,57 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        Cancel
+      <ion-button (click)="presentAlertConfirm('leave')">
+        <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>New daily</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen padding>
-  <ion-slides scrollbar="true">
+  <ion-slides #slider scrollbar="true" (ionSlideDidChange)="changeTitle()">
 
     <ion-slide>
       <AccordionComponent
               *ngFor="let section of sections"
               [name]="section.name"
               [image]="section.image"
-              (change)="section.opened = $event">
+              (change)="section.opened[0] = $event">
         <IssuesMgtComponent
-                *ngIf="section.opened"
+                *ngIf="section.opened[0]"
                 [source]="section.source"
+                [today]="false"
                 [issues]="section.issues[0]"
                 (collapsed)="section.issues[0] = $event;">
         </IssuesMgtComponent>
       </AccordionComponent>
     </ion-slide>
 
+    <ion-slide>
+      <div *ngFor="let section of sections">
+        <AccordionComponent
+                *ngIf="section.issues.length == 2"
+                [name]="section.name"
+                [image]="section.image"
+                (change)="section.opened[1] = $event">
+          <IssuesMgtComponent
+                  *ngIf="section.opened[1]"
+                  [source]="section.source"
+                  [today]="true"
+                  [issues]="section.issues[1]"
+                  (collapsed)="section.issues[1] = $event;">
+          </IssuesMgtComponent>
+        </AccordionComponent>
+      </div>
+    </ion-slide>
+
   </ion-slides>
+
+  <!-- fab placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="presentAlertConfirm('finish the daily', true)">
+    <ion-fab-button>
+      <ion-icon name="done-all"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

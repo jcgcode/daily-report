@@ -1,16 +1,23 @@
+import Daily from './interfaces/daily.interface';
+
 export const TOKENS_KEYS = {
     AUTH: 'Auth',
-    TODAY_DAILY: 'TodayDaily'
+    TODAY_DAILY: 'TodayDaily',
+    ALL_DAILY: 'AllDaily'
 };
 
-export const NEW_YESTERDAY_LABELS = {
+export const NEW_LABELS = {
     'To Do': true,
     Doing: true,
     Done: true,
     'QA review': true,
-    Reviewed: true,
-    Approved: true
+    Reviewed: true
 };
+export const TEST_LABELS = {
+    'QA review': true,
+    Reviewed: true
+};
+
 export const DEV_YESTERDAY_LABELS = {
     Doing: true,
     Done: true,
@@ -18,9 +25,9 @@ export const DEV_YESTERDAY_LABELS = {
     Reviewed: true,
     Approved: true
 };
-export const TEST_YESTERDAY_LABELS = {
-    'QA review': true,
-    Reviewed: true
+export const DEV_TODAY_LABELS = {
+    'To Do': true,
+    Doing: true
 };
 
 /**
@@ -42,11 +49,81 @@ export function concatChildArrays(parentArray) {
  */
 export function omitDuplicates(array, key) {
     const itemsObject = {};
-    array.forEach(item => itemsObject[item[key]] = item );
+    array.forEach(item => itemsObject[item[key]] = item);
     return Object.keys(itemsObject).map(itemKey => itemsObject[itemKey]);
     /*return Array.from(new Set(array.map(item => item[key]))).map(usedKey => {
         return array.find(item => {
             return item[key] === usedKey;
         });
     });*/
+}
+
+/**
+ * For source given, return the labels separated by comas
+ * @param (source) String for section source
+ * @param (today) Boolean to indicate if it's today
+ */
+export function sourceLabels(source: string, today: boolean = false) {
+    let LABELS;
+    if (source === 'dev' && today) {
+        LABELS = DEV_TODAY_LABELS;
+    } else if (source === 'dev' && !today) {
+        LABELS = DEV_YESTERDAY_LABELS;
+    } else if (source === 'test') {
+        LABELS = TEST_LABELS;
+    } else {
+        LABELS = NEW_LABELS;
+    }
+    return Object.keys(LABELS).reduce((cad, label) => {
+        return cad += `${label},`;
+    }, '').slice(0, -1);
+}
+
+/**
+ * For daily given, return the discord message
+ * @param (daily) Daily to be converted into a message
+ */
+export function composeDiscordMessage(daily: Daily) {
+    let message = '';
+
+    message += `**${daily.yesterday.title}**\n\n\n`;
+    if (daily.yesterday.creation.title !== '') {
+        message += `--> ${daily.yesterday.creation.title}\n\n`;
+        daily.yesterday.creation.items.forEach(item => {
+            message += `- ${item}\n`;
+        });
+        message += `\n`;
+    }
+    if (daily.yesterday.developing.title !== '') {
+        message += `--> ${daily.yesterday.developing.title}\n\n`;
+        daily.yesterday.developing.items.forEach(item => {
+            message += `- ${item}\n`;
+        });
+        message += `\n`;
+    }
+    if (daily.yesterday.testing.title !== '') {
+        message += `--> ${daily.yesterday.testing.title}\n\n`;
+        daily.yesterday.testing.items.forEach(item => {
+            message += `- ${item}\n`;
+        });
+        message += `\n\n`;
+    }
+
+    message += `**${daily.today.title}**\n\n\n`;
+    if (daily.today.developing.title !== '') {
+        message += `--> ${daily.today.developing.title}\n\n`;
+        daily.today.developing.items.forEach(item => {
+            message += `- ${item}\n`;
+        });
+        message += `\n`;
+    }
+    if (daily.today.testing.title !== '') {
+        message += `--> ${daily.today.testing.title}\n\n`;
+        daily.today.testing.items.forEach(item => {
+            message += `- ${item}\n`;
+        });
+        message += `\n\n`;
+    }
+
+    return message;
 }
