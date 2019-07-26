@@ -6,7 +6,10 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {timer} from 'rxjs';
 import {AuthService} from './services/auth.service';
-import {NavigationEnd, Router, Routes} from '@angular/router';
+import {Router} from '@angular/router';
+import {environment} from '../environments/environment';
+
+declare var TestFairy: any;
 
 @Component({
     selector: 'app-root',
@@ -32,6 +35,9 @@ export class AppComponent {
 
     initializeApp() {
         this.platform.ready().then(() => {
+            if ((window as any).TestFairy) {
+                TestFairy.begin(environment.TEST_FAIRY);
+            }
             this.statusBar.styleDefault();
             this.splashScreen.hide();
             timer(3000).subscribe(() => this.showSplash = false);
