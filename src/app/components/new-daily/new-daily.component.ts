@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {AlertController, IonSlides, LoadingController, ModalController} from '@ionic/angular';
 import Section from '../../services/interfaces/section.interface';
 import {DailyService} from '../../services/daily.service';
+import {presentAlertConfirm, presentLoading} from '../../services/util';
 
 @Component({
     selector: 'app-new-daily',
@@ -63,42 +64,23 @@ export class NewDailyComponent {
         );
     }
 
-    async presentAlertConfirm(strong: string, completed: boolean = false) {
-        const alert = await this.alertController.create({
-            header: 'Confirm!',
-            message: `Are you sure you want to <strong>${strong}</strong>?`,
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Okay',
-                    handler: () => {
-                        if (completed) {
-                            this.presentDailyLoading('Creating the daily', completed);
-                        } else {
-                            this.dismiss();
-                        }
-                    }
+    handleAlert(strong: string, completed: boolean = false) {
+        presentAlertConfirm(`${strong}`)
+            .then(() => {
+                if (completed) {
+                    presentLoading('Creating the daily')
+                        .then((loading) => {
+                            this.dailyService.setTodaysDaily(this.sections).then(
+                                () => {
+                                    loading.dismiss();
+                                    this.dismiss(completed);
+                                }
+                            );
+                        });
+                } else {
+                    this.dismiss();
                 }
-            ]
-        });
-
-        await alert.present();
-    }
-
-    async presentDailyLoading(message: string, completed: boolean) {
-        const loading = await this.loadingController.create({
-            message: `${message}...`
-        });
-        await loading.present();
-        this.dailyService.setTodaysDaily(this.sections).then(
-            response => {
-                loading.dismiss();
-                this.dismiss(completed);
-            }
-        );
+            });
     }
 
 }

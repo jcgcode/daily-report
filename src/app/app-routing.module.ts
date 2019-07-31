@@ -9,7 +9,8 @@ const routes: Routes = [
         path: 'tabs',
         canActivate: [AuthGuardService],
         loadChildren: './screens/tabs/tabs.module#TabsPageModule'
-    }
+    },
+  { path: 'settings', loadChildren: './screens/settings/settings.module#SettingsPageModule' }
 ];
 
 @NgModule({

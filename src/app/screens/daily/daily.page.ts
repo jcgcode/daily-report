@@ -4,7 +4,7 @@ import {DailyService} from '../../services/daily.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {NewDailyComponent} from '../../components/new-daily/new-daily.component';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {composeDiscordMessage} from '../../services/util';
+import {composeDiscordMessage, presentAlertConfirm} from '../../services/util';
 
 @Component({
     selector: 'app-new-daily',
@@ -35,7 +35,10 @@ export class DailyPage implements OnInit {
     }*/
 
     logout() {
-        this.authService.logout();
+        presentAlertConfirm('log out', 'All the saved data for the current user will be deleted.')
+            .then(() => {
+                this.authService.logout();
+            });
     }
 
     removeTodaysDaily() {
@@ -62,25 +65,10 @@ export class DailyPage implements OnInit {
         }
     }
 
-    async presentAlertConfirm(strong: string) {
-        const alert = await this.alertController.create({
-            header: 'Confirm!',
-            message: `Are you sure you want to <strong>${strong}</strong>?`,
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Okay',
-                    handler: () => {
-                        this.removeTodaysDaily();
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
+    handleAlert(strong: string) {
+        presentAlertConfirm(`${strong}`)
+            .then(() => {
+                this.removeTodaysDaily();
+            });
     }
-
 }

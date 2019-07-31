@@ -1,4 +1,8 @@
 import Daily from './interfaces/daily.interface';
+import {AlertController, LoadingController} from '@ionic/angular';
+
+const alertController = new AlertController();
+const loadingController = new LoadingController();
 
 export const TOKENS_KEYS = {
     AUTH: 'Auth',
@@ -126,4 +130,47 @@ export function composeDiscordMessage(daily: Daily) {
     }
 
     return message;
+}
+
+/**
+ * Presents a system confirm alert
+ * @param (strongMessage) String for the strong text of the alert message
+ * @param (extraInfo) String for extra info to be shown
+ */
+export function presentAlertConfirm(strongMessage: string, extraInfo?: string): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
+        const alert = await alertController.create({
+            header: 'Confirm!',
+            message: `Are you sure you want to <strong>${strongMessage}</strong>? ${extraInfo || ''}`,
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Okay',
+                    handler: () => {
+                        alert.dismiss().then(() => {
+                            resolve(true);
+                        });
+                        return false;
+                    }
+                }
+            ]
+        });
+
+        alert.present();
+    });
+}
+
+/**
+ * Presents a system loading
+ * @param (message) String for the text next to the spinner
+ */
+export async function presentLoading(message: string) {
+    const loading = await loadingController.create({
+        message: `${message}...`
+    });
+    await loading.present();
+    return loading;
 }
